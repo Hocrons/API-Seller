@@ -1,7 +1,7 @@
 from src.Application.Controllers.user_controller import UserController
 from flask import jsonify, make_response
 
-def init_routes(app): 
+def init_routes(app):
 
     @app.route('/api', methods=['GET'])
     def health():
@@ -20,6 +20,5 @@ def init_routes(app):
     @app.route('/user/verify', methods=['POST'])
     def verify_user():
         return UserController.verify_user()
-    
-    
 
+    app.add_url_rule("/api/auth/login", "login", UserController.login, methods=["POST"])
