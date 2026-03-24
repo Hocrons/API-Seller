@@ -21,5 +21,6 @@ def init_routes(app):
     def verify_user():
         return UserController.verify_user()
     
-    
-
+    @app.route('/api/auth/login', methods=['POST'])
+    def login():
+        return UserController.login()
