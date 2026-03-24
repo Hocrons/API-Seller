@@ -19,3 +19,31 @@ class UserController:
             "mensagem": "User salvo com sucesso",
             "usuarios": user.to_dict()
         }), 200)
+    
+    @staticmethod
+    def get_users():
+        users = UserService.get_users()
+
+        return make_response(jsonify({
+                "usuarios": [user.to_dict() for user in users]
+            }), 200)
+    
+    @staticmethod
+    def verify_user():
+        data = request.get_json()
+
+        celular = data.get('celular')
+        code = data.get('code')
+
+        if not celular or not code:
+            return make_response(jsonify({"erro": "Missing required fields"}), 400)
+
+        try:
+            UserService.verify_code(celular, code)
+
+            return make_response(jsonify({
+                "mensagem": "Usuário ativado com sucesso"
+            }), 200)
+
+        except ValueError as e:
+            return make_response(jsonify({"erro": str(e)}), 400)
