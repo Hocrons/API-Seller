@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from flask import Flask
 from src.config.data_base import init_db
 from src.routes import init_routes

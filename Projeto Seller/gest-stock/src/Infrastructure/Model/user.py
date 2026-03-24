@@ -8,6 +8,7 @@ class User(db.Model):
     celular = db.Column(db.String(20), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(20), nullable=False, default='inativo')
+    code = db.Column(db.String(4))
 
     def to_dict(self):
         return {
