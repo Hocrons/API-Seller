@@ -2,6 +2,7 @@ from src.Domain.user import UserDomain
 from src.Infrastructure.Model.user import User
 from src.config.data_base import db 
 from src.Infrastructure.http.whats_app import WhatsApp
+from werkzeug.security import generate_password_hash
 import random
 
 class UserService:
@@ -29,7 +30,7 @@ class UserService:
             email=email, 
             celular=celular, 
             cnpj=cnpj, 
-            password=password,
+            password=generate_password_hash(password),
             code = code
         )        
 
