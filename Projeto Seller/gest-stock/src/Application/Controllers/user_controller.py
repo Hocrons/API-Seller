@@ -47,3 +47,16 @@ class UserController:
 
         except ValueError as e:
             return make_response(jsonify({"erro": str(e)}), 400)
+    
+    @staticmethod
+    def update_user(user_id):
+        data = request.get_json()
+
+        try:
+            updated_user = UserService.update_user(user_id, **data)
+            return make_response(jsonify({
+                "mensagem": "Usuário atualizado com sucesso",
+                "usuario": updated_user.to_dict()
+            }), 200)
+        except ValueError as e:
+            return make_response(jsonify({"erro": str(e)}), 400)
