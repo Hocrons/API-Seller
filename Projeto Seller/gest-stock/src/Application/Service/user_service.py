@@ -72,3 +72,31 @@ class UserService:
         user.code = None
 
         db.session.commit()
+
+    @staticmethod
+    def update_user(user_id, **kwargs):
+        user = User.query.get(user_id)
+
+        if not user:
+            raise ValueError("Usuário não encontrado")
+
+        if user.status != "ativo":
+            raise ValueError("Usuário deve estar ativo para ser atualizado")
+
+        allowed_fields = ['name', 'email', 'celular', 'cnpj']
+
+        for field, value in kwargs.items():
+            if field in allowed_fields:
+                
+                if field == 'email' and User.query.filter_by(email=value).first() and value != user.email:
+                    raise ValueError("Email já cadastrado")
+                if field == 'celular' and User.query.filter_by(celular=value).first() and value != user.celular:
+                    raise ValueError("Celular já cadastrado")
+                if field == 'cnpj' and User.query.filter_by(cnpj=value).first() and value != user.cnpj:
+                    raise ValueError("CNPJ já cadastrado")
+
+                setattr(user, field, value)
+
+        db.session.commit()
+
+        return UserDomain(user.id, user.name, user.email, user.password, user.status, user.celular, user.cnpj)
