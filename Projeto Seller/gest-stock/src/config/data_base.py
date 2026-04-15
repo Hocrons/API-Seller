@@ -12,7 +12,7 @@ def init_db(app):
     2. MySQL - Precisa subir o Docker com docker-compose up
     """
     
-    # ========== OPÇÃO 1: SQLite (Sem Docker) ==========
+    # ========== OPÇÃO 1: SQLite (Sem Docker) =========
     # Banco de dados local, arquivo criado na pasta do projeto
     basedir = os.path.abspath(os.path.dirname(__file__))
     db_path = os.path.join(basedir, '..', '..', 'market_management.db')
