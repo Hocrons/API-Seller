@@ -1,5 +1,6 @@
 from flask import request, jsonify, make_response
 from src.Application.Service.user_service import UserService
+from src.Application.Service.user_service_login import UserServiceLogin
 
 class UserController:
     @staticmethod
@@ -47,16 +48,20 @@ class UserController:
 
         except ValueError as e:
             return make_response(jsonify({"erro": str(e)}), 400)
-    
+        
     @staticmethod
-    def update_user(user_id):
+    def login():
         data = request.get_json()
 
+        email = data.get('email')
+        password = data.get('password')
+
+        if not email or not password:
+            return make_response(jsonify({"erro": "Missing required fields"}), 400)
+
         try:
-            updated_user = UserService.update_user(user_id, **data)
-            return make_response(jsonify({
-                "mensagem": "Usuário atualizado com sucesso",
-                "usuario": updated_user.to_dict()
-            }), 200)
+            response, status = UserServiceLogin.login(email, password)
+            return make_response(jsonify(response), status)
+
         except ValueError as e:
             return make_response(jsonify({"erro": str(e)}), 400)
