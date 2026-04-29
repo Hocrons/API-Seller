@@ -16,6 +16,5 @@ class UserDomain:
             "status": self.status,
             "celular": self.celular,
             "cnpj": self.cnpj,
-            "status": self.status
         }
         
