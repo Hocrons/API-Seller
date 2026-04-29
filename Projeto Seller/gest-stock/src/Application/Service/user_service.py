@@ -30,7 +30,7 @@ class UserService:
             email=email, 
             celular=celular, 
             cnpj=cnpj, 
-            password=generate_password_hash(password),
+            password=password,
             code = code
         )        
 
