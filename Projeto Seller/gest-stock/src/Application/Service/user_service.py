@@ -30,14 +30,17 @@ class UserService:
             email=email, 
             celular=celular, 
             cnpj=cnpj, 
-            password=password,
+            password=generate_password_hash(password),
             code = code
         )        
 
         db.session.add(user)
         db.session.commit()    
 
-        WhatsApp.send_code(celular, code)  
+        try:
+            WhatsApp.send_code(celular, code)
+        except Exception:
+            pass
          
         return UserDomain(user.id, user.name, user.email, user.password, user.status, user.celular, user.cnpj)
     

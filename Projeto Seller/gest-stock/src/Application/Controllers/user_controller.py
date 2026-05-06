@@ -64,4 +64,7 @@ class UserController:
             return make_response(jsonify(response), status)
 
         except ValueError as e:
-            return make_response(jsonify({"erro": str(e)}), 400)
+            error_message = str(e)
+            if error_message in ["Senha incorreta", "Usuário não encontrado", "Usuário inativo. Verifique seu código de ativação"]:
+                return make_response(jsonify({"erro": error_message}), 401)
+            return make_response(jsonify({"erro": error_message}), 400)

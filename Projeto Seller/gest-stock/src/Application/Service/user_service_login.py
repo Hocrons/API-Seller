@@ -18,7 +18,7 @@ class UserServiceLogin:
             raise ValueError("Usuário inativo. Verifique seu código de ativação")
 
         access_token = create_access_token(
-            identity=str(user.id),
+            identity=user.id,
             additional_claims={
                 "email": user.email,
                 "status": user.status
