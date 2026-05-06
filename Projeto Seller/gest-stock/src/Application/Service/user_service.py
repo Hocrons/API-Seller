@@ -22,6 +22,8 @@ class UserService:
 
         if User.query.filter_by(cnpj=cnpj).first():
             raise ValueError("CNPJ já cadastrado")
+        
+        password = generate_password_hash(password)
 
         code = UserService.__generate_code()
 

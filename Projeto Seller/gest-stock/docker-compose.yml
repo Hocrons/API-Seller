@@ -17,9 +17,11 @@ services:
       context: . 
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "3000:3000"
     volumes:
       - .:/src
+    env_file:
+      - .env
     environment:
       FLASK_APP: run.py
       FLASK_ENV: development

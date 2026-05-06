@@ -6,7 +6,7 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     cnpj = db.Column(db.String(14), unique=True, nullable=False)
     celular = db.Column(db.String(20), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(600), nullable=False)
     status = db.Column(db.String(20), nullable=False, default='inativo')
     code = db.Column(db.String(4))
 
