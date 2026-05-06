@@ -8,15 +8,11 @@ from src.routes import init_routes
 import os
 
 def create_app():
-    """
-    Função que cria e configura a aplicação Flask.
-    """
     app = Flask(__name__)
-    
-    # Carrega JWT_SECRET_KEY do .env, ou usa padrão para desenvolvimento
+
     jwt_secret = os.getenv("JWT_SECRET_KEY", "dev-secret-key-change-in-production")
     app.config["JWT_SECRET_KEY"] = jwt_secret
-    
+
     jwt = JWTManager(app)
 
     init_db(app)
