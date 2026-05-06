@@ -37,7 +37,8 @@ class UserService:
         db.session.add(user)
         db.session.commit()    
 
-        WhatsApp.send_code(celular, code)  
+        WhatsApp.send_code(celular, code)
+        #print(f"Código de verificação: {code}")
          
         return UserDomain(user.id, user.name, user.email, user.password, user.status, user.celular, user.cnpj)
     
