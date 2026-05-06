@@ -6,10 +6,13 @@ from flask_jwt_extended import JWTManager
 from src.config.data_base import init_db
 from src.routes import init_routes
 from flask_cors import CORS
+from flask_migrate import Migrate
+from src.config.data_base import db
 import os
 
 def create_app():
     app = Flask(__name__)
+    migrate = Migrate(app, db)
 
     jwt_secret = os.getenv("JWT_SECRET_KEY", "dev-secret-key-change-in-production")
     app.config["JWT_SECRET_KEY"] = jwt_secret
@@ -47,4 +50,4 @@ app = create_app()
 from src.Infrastructure.Model.user import User
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=3000, debug=True)

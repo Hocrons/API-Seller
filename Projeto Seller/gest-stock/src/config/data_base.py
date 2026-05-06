@@ -1,31 +1,32 @@
-import os
+import time
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import OperationalError, DatabaseError
 
 db = SQLAlchemy()
 
+
+def wait_for_db(max_retries=15, delay=2):
+    """
+    Aguarda o banco de dados ficar disponível antes de continuar.
+    """
+    for attempt in range(max_retries):
+        try:
+            db.engine.connect()
+            print("✅ Banco conectado!")
+            return
+        except (OperationalError, DatabaseError) as e:
+            print(f"⏳ Tentativa {attempt + 1}/{max_retries} - banco ainda não disponível...")
+            time.sleep(delay)
+
+    raise Exception("❌ Não foi possível conectar ao banco após várias tentativas")
+
+
 def init_db(app):
-    """
-    Inicializa a base de dados com o app Flask e o SQLAlchemy.
-    
-    Opções de banco de dados:
-    1. SQLite (padrão) - Não precisa de Docker, ideal para desenvolvimento
-    2. MySQL - Precisa subir o Docker com docker-compose up
-    """
-    
-    # ========== OPÇÃO 1: SQLite (Sem Docker) =========
-    # Banco de dados local, arquivo criado na pasta do projeto
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    db_path = os.path.join(basedir, '..', '..', 'market_management.db')
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
-    
-    # ========== OPÇÃO 2: MySQL (Com Docker) ==========
-    # Descomente a linha abaixo e comente a linha do SQLite acima
-    # Depois rode: docker-compose up
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@mysql57:3306/market_management'
-    
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@db:3306/market_management'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     db.init_app(app)
-    
-    # Cria as tabelas automaticamente
+
     with app.app_context():
+        wait_for_db()
         db.create_all()
