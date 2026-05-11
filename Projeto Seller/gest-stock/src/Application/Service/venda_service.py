@@ -81,6 +81,26 @@ class VendaService:
             raise e
 
     @staticmethod
+    def get_all_vendas():
+        try:
+            vendas = Venda.query.order_by(Venda.created_at.desc()).all()
+
+            return [
+                VendaDomain(
+                    venda.id,
+                    venda.produto_id,
+                    venda.quantidade,
+                    venda.preco_unitario,
+                    venda.valor_total,
+                    venda.seller_id,
+                    venda.created_at
+                )
+                for venda in vendas
+            ]
+        except Exception as e:
+            raise e
+
+    @staticmethod
     def get_venda_by_id(venda_id, seller_id):
         try:
             ValidadorVenda.validar_seller_ativo(seller_id)

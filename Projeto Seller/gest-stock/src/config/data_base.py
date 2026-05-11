@@ -22,11 +22,10 @@ def wait_for_db(max_retries=15, delay=2):
 
 
 def init_db(app):
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@db:3306/market_management'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market_management.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
 
     with app.app_context():
-        wait_for_db()
         db.create_all()

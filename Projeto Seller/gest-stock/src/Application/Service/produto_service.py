@@ -69,6 +69,27 @@ class ProdutoService:
             raise e
 
     @staticmethod
+    def get_all_produtos():
+        try:
+            produtos = Produto.query.all()
+
+            return [
+                ProdutoDomain(
+                    produto.id,
+                    produto.nome,
+                    produto.preco,
+                    produto.quantidade_estoque,
+                    produto.status,
+                    produto.imagem,
+                    produto.seller_id
+                )
+                for produto in produtos
+            ]
+
+        except Exception as e:
+            raise e
+
+    @staticmethod
     def get_produto_by_id(produto_id, seller_id):
         produto = Produto.query.filter_by(
             id=produto_id,

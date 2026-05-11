@@ -42,12 +42,19 @@ class DashboardController:
 
             return make_response(jsonify({
                 "produtos_total": produtos_total,
+                "products_total": produtos_total,
                 "produtos_ativos": produtos_ativos,
+                "active_products": produtos_ativos,
                 "produtos_inativos": produtos_inativos,
+                "inactive_products": produtos_inativos,
                 "estoque_total": estoque_total,
+                "total_stock": estoque_total,
                 "vendas_total": vendas_total,
+                "sales_total": vendas_total,
                 "valor_total_vendido": valor_total_vendido,
-                "produto_mais_vendido": produto_mais_vendido
+                "total_sales_value": valor_total_vendido,
+                "produto_mais_vendido": produto_mais_vendido,
+                "best_selling_product": produto_mais_vendido
             }), 200)
         except Exception as e:
             return make_response(jsonify({"erro": "Erro interno do servidor"}), 500)
@@ -71,7 +78,8 @@ class DashboardController:
             ]
 
             return make_response(jsonify({
-                "relatorio_estoque": relatorio
+                "relatorio_estoque": relatorio,
+                "stock_report": relatorio
             }), 200)
         except Exception as e:
             return make_response(jsonify({"erro": "Erro interno do servidor"}), 500)
@@ -101,7 +109,8 @@ class DashboardController:
             ]
 
             return make_response(jsonify({
-                "relatorio_vendas": relatorio
+                "relatorio_vendas": relatorio,
+                "sales_report": relatorio
             }), 200)
         except Exception as e:
             return make_response(jsonify({"erro": "Erro interno do servidor"}), 500)
