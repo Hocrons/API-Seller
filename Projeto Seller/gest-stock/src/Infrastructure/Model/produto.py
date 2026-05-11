@@ -14,9 +14,16 @@ class Produto(db.Model):
         return {
             "id": self.id,
             "nome": self.nome,
+            "name": self.nome,
             "preco": self.preco,
+            "price": self.preco,
             "quantidade_estoque": self.quantidade_estoque,
+            "quantity": self.quantidade_estoque,
+            "stock_quantity": self.quantidade_estoque,
+            "stock": self.quantidade_estoque,
             "status": self.status,
             "imagem": self.imagem,
-            "seller_id": self.seller_id
+            "image": self.imagem,
+            "seller_id": self.seller_id,
+            "sellerId": self.seller_id
         }

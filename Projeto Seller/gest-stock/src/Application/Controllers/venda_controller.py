@@ -35,8 +35,10 @@ class VendaController:
 
         try:
             vendas = VendaService.get_vendas_by_seller(seller_id)
+            vendas_data = [venda.to_dict() for venda in vendas]
             return make_response(jsonify({
-                "vendas": [venda.to_dict() for venda in vendas]
+                "vendas": vendas_data,
+                "sales": vendas_data
             }), 200)
         except Exception as e:
             return make_response(jsonify({"erro": "Erro interno do servidor"}), 500)

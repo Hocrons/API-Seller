@@ -23,7 +23,7 @@ class UserService:
         if User.query.filter_by(cnpj=cnpj).first():
             raise ValueError("CNPJ já cadastrado")
         
-        password = generate_password_hash(password)
+        hashed_password = generate_password_hash(password)
 
         code = UserService.__generate_code()
 
@@ -32,8 +32,8 @@ class UserService:
             email=email, 
             celular=celular, 
             cnpj=cnpj, 
-            password=generate_password_hash(password),
-            code = code
+            password=hashed_password,
+            code=code
         )        
 
         db.session.add(user)
